@@ -43,18 +43,34 @@ def get_holidays(year, locality='chisinau', calendar=2):
 	holidays.add(easter + timedelta(days=8))
 
 	# j) ziua Hramului bisericii din localitatea respectivă, declarată în modul stabilit de consiliul local al municipiului, oraşului, comunei, satului.
-	if locality in ['chisinau', 'bender', 'briceni', 'floresti', 'rezina']:
+	if locality in ['tiraspol', 'chisinau', 'bender', 'briceni', 'floresti', 'rezina', 'dubasari']:
 		holidays.add(date(year, 10, 14))
-	elif locality in ['balti', 'basarabiasca', 'donduseni', 'falesti', 'javgur']:
+	elif locality in ['balti', 'basarabeasca', 'donduseni', 'falesti', 'javgur']:
 		holidays.add(date(year, 9, 22))
-	elif locality == 'orhei':
-		holidays.add(date(year, 11, 8))
 	elif locality in ['ungheni', 'drochia', 'soroca', 'cimislia', 'telenesti']:
 		holidays.add(date(year, 8, 28))
-	elif locality == 'cahul':
-		holidays.add(date(year, 11, 21))
 	elif locality in ['ialoveni', 'leova', 'straseni']:
 		holidays.add(date(year, 10, 27))
+	elif locality in ['edinet']:
+		holidays.add(date(year, 1, 14))
+	elif locality in ['comrat']:
+		holidays.add(date(year, 1, 20))
+	elif locality in ['ocnita', 'singerei', 'taraclia']:
+		holidays.add(date(year, 5, 6))
+	elif locality in ['riscani']:
+		holidays.add(date(year, 9, 21))
+	elif locality in ['calarasi']:
+		holidays.add(date(year, 6, 20))
+	elif locality in ['criuleni']:
+		holidays.add(date(year, 9, 20))
+	elif locality in ['causeni']:
+		holidays.add(date(year, 7, 12))
+	elif locality in ['stefan voda']:
+		holidays.add(date(year, 5, 30))
+	elif locality in ['anenii noi', 'cantemir', 'ceadir-lunga', 'orhei', 'cosnita']:
+		holidays.add(date(year, 11, 8))
+	elif locality in ['glodeni', 'cahul', 'hincesti', 'nisporeni', 'soldanesti', 'cainari', 'otac']:
+		holidays.add(date(year, 11, 21))
 
 	return holidays
 
