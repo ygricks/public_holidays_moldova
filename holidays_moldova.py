@@ -2,16 +2,31 @@ from dateutil.easter import easter as get_easter
 from datetime import date, timedelta
 
 
-def get_holidays(year, locality='chisinau', calendar=2):
+def get_holidays_list(*args, **kwargs):
+	"""Return holydays in Moldova in locality in specific year -> list
+
+	Keyword arguments:
+	year -- the year of expecting, YYYY (default "curent year")
+	locality -- the locality, lowercase string (default chisinau)
+	calendar -- int, EASTER_JULIAN = 1, EASTER_ORTHODOX = 2, EASTER_WESTERN = 3
+	"""
+
+	holidays = list(get_holidays(*args, **kwargs))
+	holidays.sort()
+	return holidays
+
+
+def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
+	"""Return holydays in Moldova in locality in specific year -> set
+
+	Keyword arguments:
+	year -- the year of expecting, YYYY (default "curent year")
+	locality -- the lity name, lowercase string (default chisinau)
+	calendar -- int, EASTER_JULIAN = 1, EASTER_ORTHODOX = 2, EASTER_WESTERN = 3
+	"""
+
 	# CODUL MUNCII AL REPUBLICII MOLDOVA
 	# Articolul 111. Zilele de sărbătoare nelucrătoare
-
-	# numele localitatii
-
-	# calendar
-	# EASTER_JULIAN = 1
-	# EASTER_ORTHODOX = 2
-	# EASTER_WESTERN = 3
 
 	holidays = {
 		# a) 1 ianuarie – Anul Nou;
@@ -36,7 +51,7 @@ def get_holidays(year, locality='chisinau', calendar=2):
 	}
 
 	# d) prima şi a doua zi de Paşte conform calendarului bisericesc;
-	easter = get_easter(year, 2)
+	easter = get_easter(year, calendar)  # 2 calendar [1:JULIAN,2:ORTHODOX,3:WESTERN]
 	holidays.add(easter)
 	holidays.add(easter + timedelta(days=1))
 	# e) ziua de luni la o săptămînă după Paşte ( Paştele Blajinilor);
@@ -76,6 +91,5 @@ def get_holidays(year, locality='chisinau', calendar=2):
 
 
 if __name__ == '__main__':
-	today = date.today()
-	m = get_holidays(today.year)
-	print("\n".join([str(i) for i in m]))
+	holidays = get_holidays_list(year=2022)
+	print("\n".join([str(i) for i in holidays]))
