@@ -91,5 +91,5 @@ def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 
 
 if __name__ == '__main__':
-	holidays = get_holidays_list(year=2022)
+	holidays = get_holidays_list(year=date.today().year)
 	print("\n".join([str(i) for i in holidays]))
