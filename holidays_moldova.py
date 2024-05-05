@@ -3,18 +3,9 @@ from datetime import date, timedelta
 
 
 def get_holidays_list(*args, **kwargs):
-	"""Return holydays in Moldova in locality in specific year -> list
-
-	Keyword arguments:
-	year -- the year of expecting, YYYY (default "curent year")
-	locality -- the locality, lowercase string (default chisinau)
-	calendar -- int, EASTER_JULIAN = 1, EASTER_ORTHODOX = 2, EASTER_WESTERN = 3
-	"""
-
-	holidays = list(get_holidays(*args, **kwargs))
-	holidays.sort()
-	return holidays
-
+    holidays = get_holidays(*args, **kwargs)
+    holidays_list = [i["date"] for i in holidays]
+    return holidays_list
 
 def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 	"""Return holydays in Moldova in locality in specific year -> set
@@ -27,69 +18,137 @@ def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 
 	# CODUL MUNCII AL REPUBLICII MOLDOVA
 	# Articolul 111. Zilele de sărbătoare nelucrătoare
-
-	holidays = {
-		# a) 1 ianuarie – Anul Nou;
-		date(year, 1, 1),
-		# b) 7 şi 8 ianuarie – Naşterea lui Isus Hristos (Crăciunul pe stil vechi);
-		date(year, 1, 7),
-		date(year, 1, 8),
-		# c) 8 martie – Ziua internaţională a femeii;
-		date(year, 3, 8),
-		# f) 1 mai – Ziua internaţională a solidarităţii oamenilor muncii;
-		date(year, 5, 1),
-		# g) 9 mai – Ziua Victoriei şi a comemorării eroilor căzuţi pentru
-		date(year, 5, 9),
-		# # ziua copiilor
-		# date(year, 6, 1),
-		# h) 27 august – Ziua Independenţei;
-		date(year, 8, 27),
-		# i) 31 august – sărbătoarea „Limba noastră”;
-		date(year, 8, 31),
+	holidays = [
+		# a) 1 ianuarie - Anul Nou;
+		{
+			"date": date(year, 1, 1),
+			"title": "Articolul 111, a) 1 ianuarie - Anul Nou",
+			"name": "Anul Nou"
+		},
+		# b) 7 şi 8 ianuarie - Naşterea lui Isus Hristos (Crăciunul pe stil vechi);
+		{
+			"date": date(year, 1, 7),
+			"title": "Articolul 111, b) 7 şi 8 ianuarie - Naşterea lui Isus Hristos (Crăciunul pe stil vechi)",
+			"name": "Naşterea lui Isus Hristos"
+		},
+		{
+			"date": date(year, 1, 8),
+			"title": "Articolul 111, b) 7 şi 8 ianuarie - Naşterea lui Isus Hristos (Crăciunul pe stil vechi)",
+			"name": "Naşterea lui Isus Hristos"
+		},
+		# c) 8 martie - Ziua internaţională a femeii;
+		{
+			"date": date(year, 3, 8),
+			"title": "Articolul 111, 8 martie - Ziua internaţională a femeii",
+			"name": "Ziua internaţională a femeii"
+		},
+		
+		# f) 1 mai - Ziua internaţională a solidarităţii oamenilor muncii;
+		{
+			"date": date(year, 5, 1),
+			"title": "Articolul 111, f) 1 mai - Ziua internaţională a solidarităţii oamenilor muncii",
+			"name": "Ziua internaţională a solidarităţii oamenilor muncii"
+		},
+		
+		# g) 9 mai - Ziua Victoriei şi a comemorării eroilor căzuţi pentru
+		{
+			"date": date(year, 5, 9),
+			"title": "Articolul 111, g) 9 mai - Ziua Victoriei şi a comemorării eroilor căzuţi pentru independenţa Patriei, Ziua Europei",
+			"name": "Ziua Victoriei şi a comemorării eroilor căzuţi pentru independenţa Patriei, Ziua Europei"
+		},
+		
+		# h) 27 august - Ziua Independenţei;
+		{
+			"date": date(year, 8, 27),
+			"title": "Articolul 111, h) 27 august - Ziua Independenţei",
+			"name": "Ziua Independenţei"
+		},
+		# i) 31 august - sărbătoarea „Limba noastră”;
+		{
+			"date": date(year, 8, 31),
+			"title": "Articolul 111, i) 31 august - sărbătoarea „Limba noastră”",
+			"name": "sărbătoarea „Limba noastră”"
+		},
+		
 		# i) 25 decembrie - Naşterea lui Isus Hristos (Crăciunul pe stil nou);
-		date(year, 12, 25),
-	}
+		{
+			"date": date(year, 12, 25),
+			"title": "Articolul 111, i) 25 decembrie - Naşterea lui Isus Hristos (Crăciunul pe stil nou)",
+			"name": "Naşterea lui Isus Hristos (Crăciunul pe stil nou)"
+		},
+		
+	]
 
 	# d) prima şi a doua zi de Paşte conform calendarului bisericesc;
-	easter = get_easter(year, calendar)  # 2 calendar [1:JULIAN,2:ORTHODOX,3:WESTERN]
-	holidays.add(easter)
-	holidays.add(easter + timedelta(days=1))
+	easter = get_easter(year, calendar)
+	holidays.append({
+			"date": easter,
+			"title": "Articolul 111, d) prima şi a doua zi de Paşte conform calendarului bisericesc",
+			"name": "prima şi a doua zi de Paşte conform calendarului bisericesc"
+	})
+	holidays.append({
+			"date": easter + timedelta(days=1),
+			"title": "Articolul 111, d) prima şi a doua zi de Paşte conform calendarului bisericesc",
+			"name": "prima şi a doua zi de Paşte conform calendarului bisericesc"
+	})
 	# e) ziua de luni la o săptămînă după Paşte ( Paştele Blajinilor);
-	holidays.add(easter + timedelta(days=8))
-
+	holidays.append({
+			"date": easter + timedelta(days=8),
+			"title": "Articolul 111, e) ziua de luni la o săptămînă după Paşte ( Paştele Blajinilor)",
+			"name": "ziua de luni la o săptămînă după Paşte ( Paştele Blajinilor)"
+	})
 	# j) ziua Hramului bisericii din localitatea respectivă, declarată în modul stabilit de consiliul local al municipiului, oraşului, comunei, satului.
+	hram = {
+		"date": date(year, 10, 14),
+		"title": "Articolul 111, j) ziua Hramului bisericii din localitatea respectivă, declarată în modul stabilit de consiliul local al municipiului, oraşului, comunei, satului",
+		"name": f"ziua Hramului bisericii din localitatea „{locality.capitalize()}”"
+	}
 	if locality in ['tiraspol', 'chisinau', 'bender', 'briceni', 'floresti', 'rezina', 'dubasari']:
-		holidays.add(date(year, 10, 14))
+		hram["date"] = date(year, 10, 14)
+		holidays.append(hram)
 	elif locality in ['balti', 'basarabeasca', 'donduseni', 'falesti', 'javgur']:
-		holidays.add(date(year, 9, 22))
+		hram["date"] = date(year, 9, 22)
+		holidays.append(hram)
 	elif locality in ['ungheni', 'drochia', 'soroca', 'cimislia', 'telenesti']:
-		holidays.add(date(year, 8, 28))
+		hram["date"] = date(year, 8, 28)
+		holidays.append(hram)
 	elif locality in ['ialoveni', 'leova', 'straseni']:
-		holidays.add(date(year, 10, 27))
+		hram["date"] = date(year, 10, 27)
+		holidays.append(hram)
 	elif locality in ['edinet']:
-		holidays.add(date(year, 1, 14))
+		hram["date"] = date(year, 1, 14)
+		holidays.append(hram)
 	elif locality in ['comrat']:
-		holidays.add(date(year, 1, 20))
+		hram["date"] = date(year, 1, 20)
+		holidays.append(hram)
 	elif locality in ['ocnita', 'singerei', 'taraclia']:
-		holidays.add(date(year, 5, 6))
+		hram["date"] = date(year, 5, 6)
+		holidays.append(hram)
 	elif locality in ['riscani']:
-		holidays.add(date(year, 9, 21))
+		hram["date"] = date(year, 9, 21)
+		holidays.append(hram)
 	elif locality in ['calarasi']:
-		holidays.add(date(year, 6, 20))
+		hram["date"] = date(year, 6, 20)
+		holidays.append(hram)
 	elif locality in ['criuleni']:
-		holidays.add(date(year, 9, 20))
+		hram["date"] = date(year, 9, 20)
+		holidays.append(hram)
 	elif locality in ['causeni']:
-		holidays.add(date(year, 7, 12))
+		hram["date"] = date(year, 7, 12)
+		holidays.append(hram)
 	elif locality in ['stefan voda']:
-		holidays.add(date(year, 5, 30))
+		hram["date"] = date(year, 5, 30)
+		holidays.append(hram)
 	elif locality in ['anenii noi', 'cantemir', 'ceadir-lunga', 'orhei', 'cosnita']:
-		holidays.add(date(year, 11, 8))
+		hram["date"] = date(year, 11, 8)
+		holidays.append(hram)
 	elif locality in ['glodeni', 'cahul', 'hincesti', 'nisporeni', 'soldanesti', 'cainari', 'otac']:
-		holidays.add(date(year, 11, 21))
-
+		hram["date"] = date(year, 11, 21)
+		holidays.append(hram)
+	holidays.sort(key=lambda x: x["date"])
 	return holidays
 
 
 if __name__ == '__main__':
-	holidays = get_holidays_list(year=date.today().year)
-	print("\n".join([str(i) for i in holidays]))
+	holidays = get_holidays(year=date.today().year)
+	print("\n".join([f"{str(i['date'])} - {i['name']}" for i in holidays]))
