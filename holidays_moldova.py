@@ -1,23 +1,24 @@
 from dateutil.easter import easter as get_easter
 from datetime import date, timedelta
 
-
 def get_holidays_list(*args, **kwargs):
     holidays = get_holidays(*args, **kwargs)
     holidays_list = [i["date"] for i in holidays]
     return holidays_list
 
 def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
-	"""Return holydays in Moldova in locality in specific year -> set
+	"""Return dict of legal holydays in Moldova
 
 	Keyword arguments:
 	year -- the year of expecting, YYYY (default "curent year")
 	locality -- the lity name, lowercase string (default chisinau)
 	calendar -- int, EASTER_JULIAN = 1, EASTER_ORTHODOX = 2, EASTER_WESTERN = 3
+
+	CODUL MUNCII AL REPUBLICII MOLDOVA
+	Articolul 111. Zilele de sărbătoare nelucrătoare
+	[Art.111 al.(6) abrogat prin LP19 din 11.03.19, MO94-99/15.03.19 art.156; în vigoare 15.03.19]
 	"""
 
-	# CODUL MUNCII AL REPUBLICII MOLDOVA
-	# Articolul 111. Zilele de sărbătoare nelucrătoare
 	holidays = [
 		# a) 1 ianuarie - Anul Nou;
 		{
@@ -42,21 +43,18 @@ def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 			"title": "Articolul 111, 8 martie - Ziua internaţională a femeii",
 			"name": "Ziua internaţională a femeii"
 		},
-		
 		# f) 1 mai - Ziua internaţională a solidarităţii oamenilor muncii;
 		{
 			"date": date(year, 5, 1),
 			"title": "Articolul 111, f) 1 mai - Ziua internaţională a solidarităţii oamenilor muncii",
 			"name": "Ziua internaţională a solidarităţii oamenilor muncii"
 		},
-		
 		# g) 9 mai - Ziua Victoriei şi a comemorării eroilor căzuţi pentru
 		{
 			"date": date(year, 5, 9),
 			"title": "Articolul 111, g) 9 mai - Ziua Victoriei şi a comemorării eroilor căzuţi pentru independenţa Patriei, Ziua Europei",
 			"name": "Ziua Victoriei şi a comemorării eroilor căzuţi pentru independenţa Patriei, Ziua Europei"
 		},
-		
 		# h) 27 august - Ziua Independenţei;
 		{
 			"date": date(year, 8, 27),
@@ -69,16 +67,13 @@ def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 			"title": "Articolul 111, i) 31 august - sărbătoarea „Limba noastră”",
 			"name": "sărbătoarea „Limba noastră”"
 		},
-		
 		# i) 25 decembrie - Naşterea lui Isus Hristos (Crăciunul pe stil nou);
 		{
 			"date": date(year, 12, 25),
 			"title": "Articolul 111, i) 25 decembrie - Naşterea lui Isus Hristos (Crăciunul pe stil nou)",
 			"name": "Naşterea lui Isus Hristos (Crăciunul pe stil nou)"
 		},
-		
 	]
-
 	# d) prima şi a doua zi de Paşte conform calendarului bisericesc;
 	easter = get_easter(year, calendar)
 	holidays.append({
@@ -145,6 +140,7 @@ def get_holidays(year=date.today().year, locality='chisinau', calendar=2):
 	elif locality in ['glodeni', 'cahul', 'hincesti', 'nisporeni', 'soldanesti', 'cainari', 'otac']:
 		hram["date"] = date(year, 11, 21)
 		holidays.append(hram)
+
 	holidays.sort(key=lambda x: x["date"])
 	return holidays
 
